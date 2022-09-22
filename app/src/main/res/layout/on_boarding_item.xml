@@ -7,7 +7,7 @@
     android:background="@color/blue_light">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/ivImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
@@ -19,7 +19,7 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         android:padding="10dp"
         android:background="@drawable/top_radius_20_dp"
         android:backgroundTint="@color/white"
@@ -32,9 +32,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
-            android:text="Title"
-            android:paddingVertical="20dp"
             android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp"
+            android:text="Title"
             android:textColor="@color/black"
             android:textSize="24sp" />
 
@@ -53,9 +53,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/radius_20_dp"
             android:backgroundTint="@color/blue_light"
-            android:layout_margin="10dp"
             android:text="Next" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -67,29 +67,29 @@
             app:layout_constraintVertical_bias="0.50" />
 
         <EditText
-            android:id="@+id/etEmailRegist"
+            android:id="@+id/etFullNameRegist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:autofillHints="username"
             android:background="@drawable/radius_20_dp"
             android:ems="10"
-            android:hint="Email"
+            android:hint="Full Name"
             android:inputType="textPersonName"
             android:padding="15dp"
             android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/etUsernameRegist"
             app:layout_constraintHorizontal_bias="0.8"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintStart_toStartOf="@+id/etUsernameRegist"
+            app:layout_constraintTop_toBottomOf="@+id/etUsernameRegist" />
 
         <EditText
             android:id="@+id/etUsernameRegist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:autofillHints="username"
             android:background="@drawable/radius_20_dp"
             android:ems="10"
@@ -98,9 +98,8 @@
             android:padding="15dp"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.51"
-            app:layout_constraintStart_toStartOf="@+id/etEmailRegist"
-            app:layout_constraintTop_toBottomOf="@+id/etEmailRegist" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <EditText
             android:id="@+id/etPasswordRegist"
@@ -116,10 +115,10 @@
             android:inputType="textPersonName"
             android:padding="15dp"
             android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="@+id/etUsernameRegist"
+            app:layout_constraintEnd_toEndOf="@+id/etFullNameRegist"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/etUsernameRegist"
-            app:layout_constraintTop_toBottomOf="@+id/etUsernameRegist" />
+            app:layout_constraintStart_toStartOf="@+id/etFullNameRegist"
+            app:layout_constraintTop_toBottomOf="@+id/etFullNameRegist" />
 
         <EditText
             android:id="@+id/etConfPassRegist"
