@@ -3,7 +3,27 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/drawable/ic_on_boarding_1.xml" value="0.2265" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/drawable/ic_on_boarding_2.xml" value="0.2265" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/drawable/ic_round_add_24.xml" value="0.2265" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/drawable/radius_10_dp.xml" value="0.222" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/drawable/radius_20_dp.xml" value="0.222" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/drawable/radius_20_dp_stroke.xml" value="0.2265" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/drawable/top_radius_20_dp.xml" value="0.222" />
         <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/layout/first_on_boarding.xml" value="0.22735507246376813" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/layout/fragment_bottom_sheet_add_note.xml" value="0.2" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/layout/fragment_detail.xml" value="0.22735507246376813" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/layout/fragment_login.xml" value="0.22735507246376813" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/layout/fragment_on_boarding.xml" value="0.22735507246376813" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/layout/fragment_register.xml" value="0.22735507246376813" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/layout/fragment_splash_screen.xml" value="0.176" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/layout/note_item.xml" value="0.176" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/layout/on_boarding_item.xml" value="0.152" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/layout/second_on_boarding.xml" value="0.22735507246376813" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/layout/toolbar.xml" value="0.22735507246376813" />
+        <entry key="..\:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/menu/menu.xml" value="0.25677083333333334" />
       </map>
     </option>
   </component>
