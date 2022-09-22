@@ -1,17 +1,13 @@
 package com.example.noticeme.adapter
 
-import android.app.Activity
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noticeme.R
-import com.example.noticeme.data.OnBoarding
-import com.example.noticeme.databinding.FragmentOnBoardingBinding
+import com.example.noticeme.model.OnBoarding
 import com.example.noticeme.databinding.OnBoardingItemBinding
-import com.example.noticeme.ui.OnBoardingFragment
 
 class OnBoardAdapter(private var onBoardList: ArrayList<OnBoarding>): RecyclerView.Adapter<OnBoardAdapter.ViewHolder>() {
 

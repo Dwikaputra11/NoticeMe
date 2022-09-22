@@ -11,6 +11,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BottomSheetAddNoteFragment : BottomSheetDialogFragment() {
 
+    // TODO: add note to the databse and update the ui
+
     private lateinit var binding: FragmentBottomSheetAddNoteBinding
 
     override fun onCreateView(

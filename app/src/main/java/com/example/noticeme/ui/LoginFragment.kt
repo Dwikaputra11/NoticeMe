@@ -30,22 +30,20 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         sharedPref = activity?.getSharedPreferences(SharedPref.name,Context.MODE_PRIVATE)!!
         val usernamePref = sharedPref.getString(SharedPref.username, "")
-        val passwordPref = sharedPref.getString(SharedPref.password, "")
         Log.d("Login", "Username: $usernamePref")
 
         binding.btnLogin.setOnClickListener {
             val username = binding.etUsernameLogin.text.toString()
             val password = binding.etPassswordLogin.text.toString()
-            Navigation.findNavController(binding.root).navigate(R.id.action_loginFragment_to_homeFragment)
-//            if(isExist(username)){
-//                if(isPasswordCorrect(password)){
-//                    Navigation.findNavController(binding.root).navigate(R.id.action_loginFragment_to_homeFragment)
-//                }else{
-//                    Toast.makeText(context, "Password Anda Salah", Toast.LENGTH_SHORT).show()
-//                }
-//            }else{
-//                Toast.makeText(context, "Username Tidak Terdaftar", Toast.LENGTH_SHORT).show()
-//            }
+            if(isExist(username)){
+                if(isPasswordCorrect(password)){
+                    Navigation.findNavController(binding.root).navigate(R.id.action_loginFragment_to_homeFragment)
+                }else{
+                    Toast.makeText(context, "Password Anda Salah", Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                Toast.makeText(context, "Username Tidak Terdaftar", Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.tvRegister.setOnClickListener {

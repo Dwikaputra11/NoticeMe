@@ -3,7 +3,7 @@ package com.example.noticeme.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.noticeme.data.Note
+import com.example.noticeme.model.Note
 import com.example.noticeme.databinding.NoteItemBinding
 
 class NoteItemAdapter(private var noteList: List<Note>): RecyclerView.Adapter<NoteItemAdapter.ViewHolder>() {
@@ -25,5 +25,9 @@ class NoteItemAdapter(private var noteList: List<Note>): RecyclerView.Adapter<No
 
     override fun getItemCount(): Int {
         return  noteList.size
+    }
+
+    fun setNoteList(noteList: List<Note>){
+        this.noteList = noteList
     }
 }
