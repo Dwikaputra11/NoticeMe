@@ -10,7 +10,7 @@ import com.example.noticeme.model.Note
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-@Database(entities = [Note::class], version = 1)
+@Database(entities = [Note::class], version = 1, exportSchema = false)
 abstract class NoteDatabase: RoomDatabase() {
     abstract fun noteDao(): NoteDao
     companion object{
@@ -24,34 +24,33 @@ abstract class NoteDatabase: RoomDatabase() {
 
         //     that can interrupt our ui, so we have to create database in background
         fun getDatabase(context: Context): NoteDatabase {
-            if (INSTANCE == null) {
-                synchronized(NoteDatabase::class.java) {
-                    if (INSTANCE == null) {
-                        INSTANCE = Room.databaseBuilder(
-                            context.applicationContext,
-                            NoteDatabase::class.java,
-                            "note_db"
-                        )
-                            .addCallback(sRoomDatabaseCallback)
-                            .build()
-                    }
-                }
+            val tempInstance = INSTANCE
+            if(tempInstance != null){
+                return tempInstance
             }
-            return INSTANCE!!
+            synchronized(NoteDatabase::class.java) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    NoteDatabase::class.java,
+                    "note_db"
+                ).addCallback(sRoomDatabaseCallback).build()
+                INSTANCE = instance
+                return instance
+            }
         }
 
         private val sRoomDatabaseCallback: Callback = object : Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
                 databaseWriteExecutor.execute {
-                    val contactDao: NoteDao = INSTANCE!!.noteDao()
-                    contactDao.deleteAll()
+                    val noteDao: NoteDao = INSTANCE!!.noteDao()
+                    noteDao.deleteAll()
 
-//                // just add data for first time when database created
-//                var contact: n? = Contact("Dwika", "Student")
-//                contactDao.insert(contact)
-//                contact = Contact("James Bond", "Spy")
-//                contactDao.insert(contact)
+                // just add data for first time when database created
+                var note: Note = Note(0, "Eating", "Eating the food", "Health")
+                noteDao.insertNote(note)
+                note = Note(1, "Jogging", "Run around the home", "Sport")
+                noteDao.insertNote(note)
                 }
             }
         }

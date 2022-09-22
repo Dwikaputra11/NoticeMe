@@ -16,6 +16,7 @@ import com.example.noticeme.databinding.FragmentHomeBinding
 import com.example.noticeme.model.Note
 import com.example.noticeme.model.NoteViewModel
 import com.example.noticeme.sharedpref.SharedPref
+import java.util.ArrayList
 
 class HomeFragment : Fragment() {
 
@@ -37,6 +38,7 @@ class HomeFragment : Fragment() {
         sharedPref = activity?.getSharedPreferences(SharedPref.name, Context.MODE_PRIVATE)!!
         // TODO make the right view model and integrate with the repository
         noteVM = ViewModelProvider(this)[NoteViewModel::class.java]
+        setView()
 
         binding.fabAddNote.setOnClickListener {
             val addNoteBottomSheetFragment = BottomSheetAddNoteFragment()
@@ -44,13 +46,13 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun setView(){
+    private fun setView(){
         val username = sharedPref.getString(SharedPref.username, "User")
         binding.tvUsername.text = "$username,"
-        noteVM.allContacts.observe(viewLifecycleOwner, Observer {
-            noteItemAdapter.setNoteList(it as List<Note>)
+        noteItemAdapter = NoteItemAdapter()
+        noteVM.readAllData.observe(viewLifecycleOwner, Observer { notes ->
+            noteItemAdapter.setNoteList(notes as List<Note>)
         })
-        noteItemAdapter = NoteItemAdapter(noteVM.noteList)
         val layoutManager = object: LinearLayoutManager(context){
             override fun canScrollVertically(): Boolean {
                 return false
