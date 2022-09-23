@@ -4,15 +4,12 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.noticeme.model.Note
 import com.example.noticeme.databinding.NoteItemBinding
-import com.example.noticeme.dummy.DummyData
 import com.example.noticeme.dummy.QueryMenu
-import com.example.noticeme.ui.BottomSheetNoteFragment
+import com.example.noticeme.model.Note
 
 class NoteItemAdapter(): RecyclerView.Adapter<NoteItemAdapter.ViewHolder>() {
 
@@ -58,7 +55,7 @@ class NoteItemAdapter(): RecyclerView.Adapter<NoteItemAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Log.d("Adapter", "onBindViewHolder: $position updated")
-        holder.binding.tvNoteTitle.text = differ.currentList[position].id.toString()
+        holder.binding.tvNoteTitle.text = differ.currentList[position].title
         holder.binding.tvNoteDesc.text = differ.currentList[position].desc
         holder.binding.tvNoteCategory.text = differ.currentList[position].category
 //        holder.binding.ivNoteEdit.setOnClickListener {

@@ -73,7 +73,7 @@ class HomeFragment : Fragment(), MenuProvider {
                 when(menu){
                     QueryMenu.EDIT-> showBottomSheet(QueryMenu.EDIT, note)
                     QueryMenu.DELETE-> deleteItem(note)
-                    else -> null
+                    else -> {}
                 }
             }
         })
@@ -103,10 +103,12 @@ class HomeFragment : Fragment(), MenuProvider {
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        Log.d("Home Fragment", "onCreateMenu: Started")
         menuInflater.inflate(R.menu.menu,menu)
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        Log.d("Menu Item", "onMenuItemSelected: Started")
         return when(menuItem.itemId) {
             R.id.logout -> {
                 Log.d("Menu Item", "onMenuItemSelected: Logout Clicked")

@@ -26,13 +26,13 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="16dp"
             android:text="Already have account?"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.74"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etConfPassRegist" />
+            app:layout_constraintTop_toBottomOf="@+id/tilConfPassword" />
 
         <TextView
             android:id="@+id/tvLogin"
@@ -43,8 +43,6 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/textView6"
-            app:layout_constraintEnd_toEndOf="@+id/etConfPassRegist"
-            app:layout_constraintHorizontal_bias="0.10"
             app:layout_constraintStart_toEndOf="@+id/textView6"
             app:layout_constraintTop_toTopOf="@+id/textView6" />
 
@@ -101,43 +99,61 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-        <EditText
-            android:id="@+id/etPasswordRegist"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="16dp"
-            android:autofillHints="username"
             android:background="@drawable/radius_20_dp"
-            android:drawableEnd="@drawable/ic_round_visibility_24"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPersonName"
-            android:padding="15dp"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="@+id/etFullNameRegist"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/etFullNameRegist"
-            app:layout_constraintTop_toBottomOf="@+id/etFullNameRegist" />
-
-        <EditText
-            android:id="@+id/etConfPassRegist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="16dp"
-            android:autofillHints="username"
-            android:background="@drawable/radius_20_dp"
-            android:drawableEnd="@drawable/ic_round_visibility_24"
-            android:ems="10"
-            android:hint="Confim Password"
-            android:inputType="textPersonName"
-            android:padding="15dp"
-            android:textColor="@color/black"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
             app:layout_constraintEnd_toEndOf="@+id/etPasswordRegist"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/etPasswordRegist"
-            app:layout_constraintTop_toBottomOf="@+id/etPasswordRegist" />
+            app:layout_constraintTop_toBottomOf="@+id/etFullNameRegist"
+            app:passwordToggleDrawable="@drawable/ic_round_visibility_24"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/unselected">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/radius_20_dp"
+                android:drawablePadding="5dp"
+                android:hint="Password"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                android:textColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilConfPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/radius_20_dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:layout_constraintEnd_toEndOf="@+id/etPasswordRegist"
+            app:layout_constraintStart_toStartOf="@+id/etPasswordRegist"
+            app:layout_constraintTop_toBottomOf="@+id/tilPassword"
+            app:passwordToggleDrawable="@drawable/ic_round_visibility_24"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/unselected">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/radius_20_dp"
+                android:drawablePadding="5dp"
+                android:hint="Confirm Password"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                android:textColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/textView2"

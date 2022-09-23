@@ -1,17 +1,13 @@
 package com.example.noticeme.ui
 
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import com.example.noticeme.R
 import com.example.noticeme.databinding.FragmentBottomSheetAddNoteBinding
 import com.example.noticeme.dummy.QueryMenu
 import com.example.noticeme.model.Note
@@ -42,7 +38,7 @@ class BottomSheetNoteFragment(private var menu: QueryMenu,private var updateNote
             when(menu){
                 QueryMenu.ADD -> addNote()
                 QueryMenu.EDIT -> editNote()
-                else -> null
+                else -> {}
             }
         }
     }

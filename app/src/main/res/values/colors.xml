@@ -10,6 +10,6 @@
     <color name="blue_light">#FFD1ECFF</color>
     <color name="blue_dark">#FFC1E0F6</color>
     <color name="button_color">#FF00B2FF</color>
-    <color name="unselected">#eee</color>
+    <color name="unselected">#CFCFCF</color>
     <color name="selected">#737373</color>
 </resources>
