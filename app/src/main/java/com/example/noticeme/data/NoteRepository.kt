@@ -33,11 +33,7 @@ class NoteRepository(private val noteDao: NoteDao) {
         NoteDatabase.databaseWriteExecutor.execute{ noteDao.deleteAll() }
     }
 
-    fun searchDatabase(searchQuery: String): LiveData<List<Note>>{
-        var list: LiveData<List<Note>> = MutableLiveData()
-        NoteDatabase.databaseWriteExecutor.execute{
-            list = noteDao.searchDatabase(searchQuery)
-        }
-        return list
+    fun searchDatabase(searchQuery: String): LiveData<List<Note>> {
+        return noteDao.searchDatabase(searchQuery)
     }
 }

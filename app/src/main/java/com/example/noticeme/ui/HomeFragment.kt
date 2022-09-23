@@ -106,10 +106,12 @@ class HomeFragment : Fragment(), MenuProvider {
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         Log.d("Home Fragment", "onCreateOptionsMenu: search")
-        val search = menu.findItem(R.id.app_bar_search)
-        val searchView = search?.actionView as? SearchView
-        searchView?.isSubmitButtonEnabled = true
-        searchView?.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+        inflater.inflate(R.menu.menu, menu)
+        val search = menu.findItem(R.id.app_bar_search) as MenuItem
+        val searchView = search.actionView as SearchView
+        Log.d("Home Fragment", "onCreateOptionsMenu: $searchView")
+        searchView.isSubmitButtonEnabled = true
+        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Toast.makeText(context, "Submit", Toast.LENGTH_SHORT).show()
                 Log.d("Home Fragment", "onQueryTextSubmit: Started")
@@ -133,12 +135,11 @@ class HomeFragment : Fragment(), MenuProvider {
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        Log.d("Home Fragment", "onCreateMenu: Started")
-        menuInflater.inflate(R.menu.menu,menu)
+
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        Log.d("Menu Item", "onMenuItemSelected: ${menuItem.itemId}")
+        Log.d("Menu Item", "onMenuItemSelected: $menuItem selected")
         return when(menuItem.itemId) {
             R.id.logout -> {
                 Log.d("Menu Item", "onMenuItemSelected: Logout Clicked")
@@ -151,34 +152,6 @@ class HomeFragment : Fragment(), MenuProvider {
                 builder.setTitle("Logout your account?")
                 builder.setMessage("Are you sure to logout your account?")
                 builder.create().show()
-                true
-            }
-            // TODO: Search function not working cause the id cannot detect by onMenuItemSelected
-            R.id.app_bar_search -> {
-                Toast.makeText(context, "Search active", Toast.LENGTH_SHORT).show()
-                Log.d("Home Fragment", "onMenuItemSelected: Search")
-                val searchView = menuItem.actionView as? SearchView
-                searchView?.isSubmitButtonEnabled = true
-                searchView?.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
-                    override fun onQueryTextSubmit(query: String?): Boolean {
-                        Toast.makeText(context, "Submit", Toast.LENGTH_SHORT).show()
-                        Log.d("Home Fragment", "onQueryTextSubmit: Started")
-                        if(query != null){
-                            searchInDatabase(query)
-                        }
-                        return true
-                    }
-
-                    override fun onQueryTextChange(query: String?): Boolean {
-                        Toast.makeText(context, "Text Change", Toast.LENGTH_SHORT).show()
-                        Log.d("Home Fragment", "onQueryTextChange: Started")
-                        if(query != null){
-                            searchInDatabase(query)
-                        }
-                        return true
-                    }
-
-                })
                 true
             }
             R.id.deleteAll -> {
@@ -205,11 +178,9 @@ class HomeFragment : Fragment(), MenuProvider {
     private fun searchInDatabase(query: String) {
         Log.d("Home Fragment", "searchInDatabase: $query")
         val searchQuery ="%$query%"
-        noteVM.searchDatabase(searchQuery).observe(viewLifecycleOwner) { list ->
-            list.let {
-                noteItemAdapter.setNoteList(it)
-            }
-        }
+        noteVM.searchDatabase(searchQuery).observe(viewLifecycleOwner, Observer {
+            noteItemAdapter.setNoteList(it as List<Note>)
+        })
     }
 
 }
