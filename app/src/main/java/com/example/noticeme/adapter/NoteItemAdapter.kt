@@ -37,6 +37,9 @@ class NoteItemAdapter(): RecyclerView.Adapter<NoteItemAdapter.ViewHolder>() {
     private val differ = AsyncListDiffer(this, diffCallback)
 
     inner class ViewHolder(var binding: NoteItemBinding):RecyclerView.ViewHolder(binding.root) {
+        fun setData(itemData: Note){
+            binding.note = itemData
+        }
         init {
             binding.ivNoteEdit.setOnClickListener {
                 listener.onItemClick(QueryMenu.EDIT, differ.currentList[adapterPosition])
@@ -55,9 +58,7 @@ class NoteItemAdapter(): RecyclerView.Adapter<NoteItemAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Log.d("Adapter", "onBindViewHolder: $position updated")
-        holder.binding.tvNoteTitle.text = differ.currentList[position].title
-        holder.binding.tvNoteDesc.text = differ.currentList[position].desc
-        holder.binding.tvNoteCategory.text = differ.currentList[position].category
+        holder.setData(differ.currentList[position])
 //        holder.binding.ivNoteEdit.setOnClickListener {
 //            val noteBottomSheetFragment = BottomSheetNoteFragment()
 //            noteBottomSheetFragment.show((context as AppCompatActivity).supportFragmentManager.beginTransaction(), noteBottomSheetFragment.tag)

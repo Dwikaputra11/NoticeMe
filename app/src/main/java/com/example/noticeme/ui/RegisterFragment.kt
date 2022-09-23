@@ -41,16 +41,20 @@ class RegisterFragment : Fragment() {
         val username = binding.etUsernameRegist.text.toString()
         val password = binding.etPasswordRegist.text.toString()
         val fullName = binding.etFullNameRegist.text.toString()
-        val confirmPassword = binding.etConfPassRegist.text.toString()
+        val confirmPassword = binding.etConfPasswordRegist.text.toString()
         val usernameExist = sharedPref.getString(SharedPref.username,"")
         if (password == confirmPassword){
             if(username != usernameExist){
-                val edit = sharedPref.edit()
-                edit.clear()
-                edit.apply()
-                addToSharedPref(username, password, fullName)
-                toastMessage("Horay! Welcome to the club!")
-                Navigation.findNavController(binding.root).navigate(R.id.action_registerFragment_to_homeFragment)
+                if(!username.contains(" ")){
+                    val edit = sharedPref.edit()
+                    edit.clear()
+                    edit.apply()
+                    addToSharedPref(username, password, fullName)
+                    toastMessage("Horay! Welcome to the club!")
+                    Navigation.findNavController(binding.root).navigate(R.id.action_registerFragment_to_homeFragment)
+                }else{
+                    toastMessage("Username should not contain whitespace!")
+                }
             }else{
                 toastMessage("Username Already Exist")
             }

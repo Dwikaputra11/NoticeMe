@@ -34,7 +34,7 @@ class LoginFragment : Fragment() {
 
         binding.btnLogin.setOnClickListener {
             val username = binding.etUsernameLogin.text.toString()
-            val password = binding.etPassswordLogin.text.toString()
+            val password = binding.etPasswordLogin.text.toString()
             if(isExist(username)){
                 if(isPasswordCorrect(password)){
                     Navigation.findNavController(binding.root).navigate(R.id.action_loginFragment_to_homeFragment)

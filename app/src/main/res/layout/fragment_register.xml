@@ -108,14 +108,15 @@
             android:background="@drawable/radius_20_dp"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-            app:layout_constraintEnd_toEndOf="@+id/etPasswordRegist"
-            app:layout_constraintStart_toStartOf="@+id/etPasswordRegist"
+            app:layout_constraintEnd_toEndOf="@+id/etFullNameRegist"
+            app:layout_constraintStart_toStartOf="@+id/etFullNameRegist"
             app:layout_constraintTop_toBottomOf="@+id/etFullNameRegist"
             app:passwordToggleDrawable="@drawable/ic_round_visibility_24"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/unselected">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPasswordRegist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/radius_20_dp"
@@ -136,14 +137,15 @@
             android:background="@drawable/radius_20_dp"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-            app:layout_constraintEnd_toEndOf="@+id/etPasswordRegist"
-            app:layout_constraintStart_toStartOf="@+id/etPasswordRegist"
+            app:layout_constraintEnd_toEndOf="@+id/tilPassword"
+            app:layout_constraintStart_toStartOf="@+id/tilPassword"
             app:layout_constraintTop_toBottomOf="@+id/tilPassword"
             app:passwordToggleDrawable="@drawable/ic_round_visibility_24"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/unselected">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etConfPasswordRegist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/radius_20_dp"

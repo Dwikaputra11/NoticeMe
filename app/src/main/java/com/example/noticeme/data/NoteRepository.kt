@@ -2,6 +2,7 @@ package com.example.noticeme.data
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.noticeme.db.NoteDatabase
 import com.example.noticeme.model.Note
 
@@ -30,5 +31,13 @@ class NoteRepository(private val noteDao: NoteDao) {
 
     fun deleteAllNotes(){
         NoteDatabase.databaseWriteExecutor.execute{ noteDao.deleteAll() }
+    }
+
+    fun searchDatabase(searchQuery: String): LiveData<List<Note>>{
+        var list: LiveData<List<Note>> = MutableLiveData()
+        NoteDatabase.databaseWriteExecutor.execute{
+            list = noteDao.searchDatabase(searchQuery)
+        }
+        return list
     }
 }

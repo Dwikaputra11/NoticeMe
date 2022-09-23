@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AlertDialog
@@ -15,7 +16,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noticeme.R
 import com.example.noticeme.adapter.NoteItemAdapter
@@ -25,7 +25,7 @@ import com.example.noticeme.model.Note
 import com.example.noticeme.model.NoteViewModel
 import com.example.noticeme.sharedpref.SharedPref
 
-class HomeFragment : Fragment(), MenuProvider {
+class HomeFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var sharedPref: SharedPreferences
@@ -102,6 +102,15 @@ class HomeFragment : Fragment(), MenuProvider {
         builder.create().show()
     }
 
+//    @Deprecated("Deprecated in Java")
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        Log.d("Home Fragment", "onCreateOptionsMenu: search")
+//        val search = menu.findItem(R.id.app_bar_search)
+//        val searchView = search?.actionView as? SearchView
+//        searchView?.isSubmitButtonEnabled = true
+//        searchView?.setOnQueryTextListener(this)
+//    }
+
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         Log.d("Home Fragment", "onCreateMenu: Started")
         menuInflater.inflate(R.menu.menu,menu)
@@ -123,7 +132,41 @@ class HomeFragment : Fragment(), MenuProvider {
                 builder.create().show()
                 true
             }
+            // TODO: Search function not working cause the id cannot detect by onMenuItemSelected
+            R.id.app_bar_search -> {
+                Log.d("Home Fragment", "onMenuItemSelected: Search")
+                val searchView = menuItem.actionView as? SearchView
+                searchView?.isSubmitButtonEnabled = true
+                searchView?.setOnQueryTextListener(this)
+                true
+            }
             else -> false
+        }
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        Log.d("Home Fragment", "onQueryTextSubmit: Started")
+        if(query != null){
+            searchInDatabase(query)
+        }
+        return true
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        Log.d("Home Fragment", "onQueryTextChange: Started")
+        if(query != null){
+            searchInDatabase(query)
+        }
+        return true
+    }
+
+    private fun searchInDatabase(query: String) {
+        Log.d("Home Fragment", "searchInDatabase: $query")
+        val searchQuery ="%$query%"
+        noteVM.searchDatabase(searchQuery).observe(viewLifecycleOwner) { list ->
+            list.let {
+                noteItemAdapter.setNoteList(it)
+            }
         }
     }
 

@@ -47,17 +47,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-//    val noteList = listOf<Note>(
-//        Note(title = "Breakfast", desc = "Eat My Breakfast", category =  "health", id = 1),
-//        Note(title = "Lunch",desc =  "Eat My Lunch",  category ="health", id = 2),
-//        Note(title = "Dinner",desc =  "Eat My Dinner", category = "health", id = 3),
-//        Note(title = "Football", desc = "Playing Football", category = "sport", id = 4),
-//        Note(title = "Sleep", desc = "Sleeping Well", category = "health", id = 5),
-//    )
-//
-//    var noteListLiveData: MutableLiveData<List<Note>> = MutableLiveData()
-//
-//    fun getLiveData(){
-//        noteListLiveData.value = noteList
-//    }
+    fun searchDatabase(searchQuery: String): LiveData<List<Note>>{
+        return repository.searchDatabase(searchQuery)
+    }
 }
