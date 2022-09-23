@@ -6,7 +6,7 @@
     android:padding="10dp"
     android:orientation="vertical"
     android:background="@drawable/top_radius_20_dp"
-    tools:context=".ui.BottomSheetAddNoteFragment">
+    tools:context=".ui.BottomSheetNoteFragment">
 
     <EditText
         android:id="@+id/etInputTitle"

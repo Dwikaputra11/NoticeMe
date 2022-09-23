@@ -1,6 +1,8 @@
 package com.example.noticeme.ui
 
 import android.os.Bundle
+import android.text.Editable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.noticeme.R
 import com.example.noticeme.databinding.FragmentBottomSheetAddNoteBinding
+import com.example.noticeme.dummy.QueryMenu
 import com.example.noticeme.model.Note
 import com.example.noticeme.model.NoteViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class BottomSheetAddNoteFragment : BottomSheetDialogFragment() {
-
-    // TODO: add note to the database and update the ui
+class BottomSheetNoteFragment(private var menu: QueryMenu,private var updateNote: Note?) : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentBottomSheetAddNoteBinding
     private lateinit var rbSelected: RadioButton
@@ -33,8 +34,41 @@ class BottomSheetAddNoteFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         noteVM = ViewModelProvider(this)[NoteViewModel::class.java]
+        if(menu == QueryMenu.EDIT){
+            binding.etInputTitle.setText(updateNote?.title)
+            binding.etInputDesc.setText(updateNote?.desc)
+        }
         binding.btnSubmit.setOnClickListener {
-            addNote()
+            when(menu){
+                QueryMenu.ADD -> addNote()
+                QueryMenu.EDIT -> editNote()
+                else -> null
+            }
+        }
+    }
+
+    // edit success to update database
+    private fun editNote() {
+        Log.d("Bottom Sheet", "editNote: Started")
+        val title = binding.etInputTitle.text.toString()
+        val desc = binding.etInputDesc.text.toString()
+        // TODO: Error when radio button not choose
+        val selectedId = binding.rgCategory.checkedRadioButtonId
+        rbSelected = binding.root.findViewById(selectedId)
+        val category = rbSelected.text.toString()
+
+        if(isValid(title, desc, category)){
+            val note = Note(
+                id = updateNote!!.id,
+                title = title,
+                desc = desc,
+                category = category
+            )
+            noteVM.updateNote(note)
+            toastMessage("Successfully Update!")
+            dismiss()
+        }else{
+            toastMessage("Please fill out all fields.")
         }
     }
 
@@ -44,7 +78,6 @@ class BottomSheetAddNoteFragment : BottomSheetDialogFragment() {
         val selectedId = binding.rgCategory.checkedRadioButtonId
         rbSelected = binding.root.findViewById(selectedId)
         val category = rbSelected.text.toString()
-
 
         if(isValid(title, desc, category)){
             val note = Note(

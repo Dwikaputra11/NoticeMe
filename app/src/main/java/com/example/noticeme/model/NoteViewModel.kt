@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
-    val readAllData:LiveData<List<Note>>
+    private val readAllData:LiveData<List<Note>>
     private val repository: NoteRepository
 
     init {

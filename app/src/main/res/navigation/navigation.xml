@@ -64,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/bottomSheetAddNoteFragment"
-        android:name="com.example.noticeme.ui.BottomSheetAddNoteFragment"
+        android:name="com.example.noticeme.ui.BottomSheetNoteFragment"
         android:label="fragment_bottom_sheet_add_note"
         tools:layout="@layout/fragment_bottom_sheet_add_note" />
 </navigation>
