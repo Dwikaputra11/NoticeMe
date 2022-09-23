@@ -11,7 +11,7 @@ import com.example.noticeme.databinding.NoteItemBinding
 import com.example.noticeme.dummy.QueryMenu
 import com.example.noticeme.model.Note
 
-class NoteItemAdapter(): RecyclerView.Adapter<NoteItemAdapter.ViewHolder>() {
+class NoteItemAdapter: RecyclerView.Adapter<NoteItemAdapter.ViewHolder>() {
 
     private lateinit var context: Context
     private lateinit var listener: OnItemClickListener

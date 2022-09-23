@@ -51,7 +51,9 @@ class RegisterFragment : Fragment() {
                     edit.apply()
                     addToSharedPref(username, password, fullName)
                     toastMessage("Horay! Welcome to the club!")
-                    Navigation.findNavController(binding.root).navigate(R.id.action_registerFragment_to_homeFragment)
+                    val bundle = Bundle()
+                    bundle.putString(SharedPref.username, username)
+                    Navigation.findNavController(binding.root).navigate(R.id.action_registerFragment_to_homeFragment, bundle)
                 }else{
                     toastMessage("Username should not contain whitespace!")
                 }

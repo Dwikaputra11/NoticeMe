@@ -22,7 +22,7 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentLoginBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -37,7 +37,9 @@ class LoginFragment : Fragment() {
             val password = binding.etPasswordLogin.text.toString()
             if(isExist(username)){
                 if(isPasswordCorrect(password)){
-                    Navigation.findNavController(binding.root).navigate(R.id.action_loginFragment_to_homeFragment)
+                    val bundle = Bundle()
+                    bundle.putString(SharedPref.username, username)
+                    Navigation.findNavController(binding.root).navigate(R.id.action_loginFragment_to_homeFragment, bundle)
                 }else{
                     Toast.makeText(context, "Password Anda Salah", Toast.LENGTH_SHORT).show()
                 }
@@ -52,7 +54,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun isExist(username: String):Boolean{
-        val usernameSharedPref = sharedPref.getString("username", "")
+        val usernameSharedPref = sharedPref.getString(SharedPref.username, "")
         if (usernameSharedPref != null) {
             if(usernameSharedPref.isBlank()){
                 return false
@@ -66,7 +68,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun isPasswordCorrect(password:String):Boolean{
-        val passwordSharedPref = sharedPref.getString("password", "")
+        val passwordSharedPref = sharedPref.getString(SharedPref.password, "")
         if (passwordSharedPref != null){
             if(passwordSharedPref.isBlank()){
                 return false

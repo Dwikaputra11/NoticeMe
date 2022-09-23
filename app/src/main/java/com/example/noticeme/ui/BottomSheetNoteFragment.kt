@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.example.noticeme.R
 import com.example.noticeme.databinding.FragmentBottomSheetAddNoteBinding
 import com.example.noticeme.dummy.QueryMenu
 import com.example.noticeme.model.Note
@@ -33,6 +34,7 @@ class BottomSheetNoteFragment(private var menu: QueryMenu,private var updateNote
         if(menu == QueryMenu.EDIT){
             binding.etInputTitle.setText(updateNote?.title)
             binding.etInputDesc.setText(updateNote?.desc)
+            setRadioButton()
         }
         binding.btnSubmit.setOnClickListener {
             when(menu){
@@ -66,6 +68,18 @@ class BottomSheetNoteFragment(private var menu: QueryMenu,private var updateNote
         }else{
             toastMessage("Please fill out all fields.")
         }
+    }
+
+    private fun setRadioButton(){
+        val selectedId = when (updateNote?.category){
+            binding.rbSport.text.toString() -> R.id.rbSport
+            binding.rbEducation.text.toString() -> R.id.rbEducation
+            binding.rbHealth.text.toString() -> R.id.rbHealth
+            binding.rbHealing.text.toString() -> R.id.rbHealing
+            else -> 0
+        }
+        Log.d("Bottom Sheet", "setRadioButton: $selectedId")
+        binding.rgCategory.check(selectedId)
     }
 
     private fun addNote(){

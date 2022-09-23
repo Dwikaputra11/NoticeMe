@@ -6,7 +6,7 @@ import com.example.noticeme.model.OnBoarding
 class DummyData {
 
     companion object {
-        val onBoardingItem = arrayListOf<OnBoarding>(
+        val onBoardingItem = arrayListOf(
             OnBoarding(
                 title = "Make Note",
                 desc = "Lorem Ipsum Dolor sit Amet Lorem Ipsum Dolor sit Amet Lorem Ipsum Dolor sit Amet",
@@ -30,5 +30,4 @@ enum class QueryMenu{
     ADD,
     EDIT,
     DELETE,
-    DELETE_ALL,
 }

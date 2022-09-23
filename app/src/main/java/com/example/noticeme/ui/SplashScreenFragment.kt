@@ -1,5 +1,6 @@
 package com.example.noticeme.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -12,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import com.example.noticeme.R
 import com.example.noticeme.databinding.FragmentSplashScreenBinding
+import com.example.noticeme.sharedpref.SharedPref
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreenFragment : Fragment() {
 
     private lateinit var binding:FragmentSplashScreenBinding
@@ -44,13 +47,15 @@ class SplashScreenFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.show()
     }
 
-    fun detectAccount(){
-        val username = sharedPref.getString("username", "")
+    private fun detectAccount(){
+        val username = sharedPref.getString(SharedPref.username, "")
         if (username != null) {
             if(username.isBlank()){
                 Navigation.findNavController(binding.root).navigate(R.id.action_splashScreenFragment_to_onBoardingFragment)
             }else{
-                Navigation.findNavController(binding.root).navigate(R.id.action_splashScreenFragment_to_homeFragment)
+                val bundle = Bundle()
+                bundle.putString(SharedPref.username, username)
+                Navigation.findNavController(binding.root).navigate(R.id.action_splashScreenFragment_to_homeFragment, bundle)
             }
         }
     }

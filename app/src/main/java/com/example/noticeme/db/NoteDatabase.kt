@@ -47,7 +47,7 @@ abstract class NoteDatabase: RoomDatabase() {
                     noteDao.deleteAll()
 
                 // just add data for first time when database created
-                var note: Note = Note(0, "Eating", "Eating the food", "Health")
+                var note = Note(0, "Eating", "Eating the food", "Health")
                 noteDao.insertNote(note)
                 note = Note(1, "Jogging", "Run around the home", "Sport")
                 noteDao.insertNote(note)

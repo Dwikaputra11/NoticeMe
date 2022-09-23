@@ -61,6 +61,9 @@
         <action
             android:id="@+id/action_homeFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <argument
+            android:name="username"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/bottomSheetAddNoteFragment"
