@@ -145,8 +145,13 @@ class HomeFragment : Fragment(), MenuProvider {
                 Log.d("Menu Item", "onMenuItemSelected: Logout Clicked")
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setPositiveButton("Yes") { _, _ ->
-                    Navigation.findNavController(binding.root)
-                        .navigate(R.id.action_homeFragment_to_loginFragment)
+                    run {
+                        val exit = sharedPref.edit()
+                        exit.clear()
+                        exit.apply()
+                        Navigation.findNavController(binding.root)
+                            .navigate(R.id.action_homeFragment_to_loginFragment)
+                    }
                 }
                 builder.setNegativeButton("No") { _, _ -> }
                 builder.setTitle("Logout your account?")

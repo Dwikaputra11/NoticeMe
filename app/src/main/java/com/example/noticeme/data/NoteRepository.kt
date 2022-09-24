@@ -1,16 +1,14 @@
 package com.example.noticeme.data
 
-import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.noticeme.db.NoteDatabase
 import com.example.noticeme.model.Note
 
 class NoteRepository(private val noteDao: NoteDao) {
-    private var allContacts: LiveData<List<Note>> = noteDao.getAllNote()
+    private var allNotes: LiveData<List<Note>> = noteDao.getAllNote()
 
     fun getAllNotes(): LiveData<List<Note>> {
-        return allContacts
+        return allNotes
     }
 
     fun insert(note: Note) {

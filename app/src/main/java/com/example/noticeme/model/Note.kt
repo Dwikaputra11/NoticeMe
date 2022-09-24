@@ -9,6 +9,8 @@ data class Note(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
     @ColumnInfo
+    var user_id: Int,
+    @ColumnInfo
     var title: String,
     @ColumnInfo
     var desc: String,

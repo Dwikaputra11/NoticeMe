@@ -9,15 +9,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.noticeme.R
 import com.example.noticeme.databinding.FragmentLoginBinding
+import com.example.noticeme.model.User
+import com.example.noticeme.model.UserViewModel
 import com.example.noticeme.sharedpref.SharedPref
 
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
     private lateinit var sharedPref: SharedPreferences
+    private lateinit var userVM: UserViewModel
+    private lateinit var userLiveData: LiveData<User>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +35,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         sharedPref = activity?.getSharedPreferences(SharedPref.name,Context.MODE_PRIVATE)!!
+        userVM = ViewModelProvider(this)[UserViewModel::class.java]
         val usernamePref = sharedPref.getString(SharedPref.username, "")
         Log.d("Login", "Username: $usernamePref")
 
@@ -56,15 +63,25 @@ class LoginFragment : Fragment() {
     private fun isExist(username: String):Boolean{
         val usernameSharedPref = sharedPref.getString(SharedPref.username, "")
         if (usernameSharedPref != null) {
-            if(usernameSharedPref.isBlank()){
-                return false
+            return if(usernameSharedPref.isBlank()){
+                false
             }else{
                 if(usernameSharedPref == username){
-                    return true
+                    true
+                }else{
+                    findInDatabase(username)
                 }
             }
         }
         return false
+    }
+
+    private fun findInDatabase(username: String): Boolean {
+        val user = userVM.findUser(username)
+        return if(user.value != null){
+            userLiveData = user
+            true
+        }else false
     }
 
     private fun isPasswordCorrect(password:String):Boolean{

@@ -6,13 +6,16 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.noticeme.data.NoteDao
+import com.example.noticeme.data.UserDao
 import com.example.noticeme.model.Note
+import com.example.noticeme.model.User
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-@Database(entities = [Note::class], version = 1, exportSchema = false)
+@Database(entities = [Note::class, User::class], version = 1, exportSchema = false)
 abstract class NoteDatabase: RoomDatabase() {
     abstract fun noteDao(): NoteDao
+    abstract fun userDao(): UserDao
     companion object{
         private const val NUMBER_OF_THREADS = 4
 
@@ -32,7 +35,7 @@ abstract class NoteDatabase: RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     NoteDatabase::class.java,
-                    "note_db"
+                    "notice_me_db"
                 ).addCallback(sRoomDatabaseCallback).build()
                 INSTANCE = instance
                 return instance
@@ -46,11 +49,11 @@ abstract class NoteDatabase: RoomDatabase() {
                     val noteDao: NoteDao = INSTANCE!!.noteDao()
                     noteDao.deleteAll()
 
-                // just add data for first time when database created
-                var note = Note(0, "Eating", "Eating the food", "Health")
-                noteDao.insertNote(note)
-                note = Note(1, "Jogging", "Run around the home", "Sport")
-                noteDao.insertNote(note)
+//                // just add data for first time when database created
+//                var note = Note(0, "Eating", "Eating the food", "Health")
+//                noteDao.insertNote(note)
+//                note = Note(1, "Jogging", "Run around the home", "Sport")
+//                noteDao.insertNote(note)
                 }
             }
         }
