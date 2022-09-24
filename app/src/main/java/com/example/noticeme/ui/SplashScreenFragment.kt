@@ -58,7 +58,7 @@ class SplashScreenFragment : Fragment() {
             if(username != null){
                 // username blank that means the last user open the app the account has been already logout
                 if(username.isBlank()){
-                    Navigation.findNavController(binding.root).navigate(R.id.action_onBoardingFragment_to_loginFragment)
+                    Navigation.findNavController(binding.root).navigate(R.id.action_splashScreenFragment_to_loginFragment)
                 }else{
                     // pass username that will display in home page use navigation arguments
                     val bundle = Bundle()

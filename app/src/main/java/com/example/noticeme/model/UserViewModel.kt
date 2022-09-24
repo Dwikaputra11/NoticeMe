@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 class UserViewModel(application: Application): AndroidViewModel(application) {
     private val repository: UserRepository
     private lateinit var userAccount: LiveData<User>
+    private lateinit var allUsername: List<String>
 
     init {
         val userDao = NoteDatabase.getDatabase(
@@ -25,7 +26,12 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
         return userAccount
     }
 
-    fun getAllUsername(): List<String> = repository.getAllUsername()
+    suspend fun getAllUsername(): List<String>{
+        viewModelScope.launch(Dispatchers.IO) {
+            allUsername = repository.getAllUsername()
+        }
+        return allUsername
+    }
 
     fun addUser(user: User){
         viewModelScope.launch(Dispatchers.IO){ repository.addUser(user) }

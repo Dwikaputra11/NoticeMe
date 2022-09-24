@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
-import com.example.noticeme.R
 import com.example.noticeme.adapter.OnBoardAdapter
 import com.example.noticeme.databinding.FragmentOnBoardingBinding
 import com.example.noticeme.dummy.DummyData
@@ -19,7 +18,7 @@ class OnBoardingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentOnBoardingBinding.inflate(layoutInflater, container, false)
         return binding.root
     }

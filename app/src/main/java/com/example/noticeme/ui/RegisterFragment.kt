@@ -16,6 +16,10 @@ import com.example.noticeme.databinding.FragmentRegisterBinding
 import com.example.noticeme.model.User
 import com.example.noticeme.model.UserViewModel
 import com.example.noticeme.sharedpref.SharedPref
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class RegisterFragment : Fragment() {
 
@@ -43,6 +47,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun registerAccount(){
         val username = binding.etUsernameRegist.text.toString()
         val password = binding.etPasswordRegist.text.toString()
@@ -57,38 +62,49 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    @DelicateCoroutinesApi
     private fun isInputValid(
         username: String,
         password: String,
         confirmPassword: String,
     ): Boolean {
-        usernameList = userVM.getAllUsername()
-        return if (password == confirmPassword){
-            if(usernameList.contains(username)){
-                if(!username.contains(" ")){
-                    true
-                }else{
-                    toastMessage("Username should not contain whitespace!")
-                    false
-                }
-            }else{
-                toastMessage("Username Already Exist")
-                false
+        var isValid: Boolean = false
+        GlobalScope.launch(Dispatchers.IO){
+            usernameList = userVM.getAllUsername()
+        }.invokeOnCompletion {
+            Log.d("Register Fragment", "isInputValid: $usernameList")
+            if(usernameList.isNotEmpty()){
+                    if (password == confirmPassword){
+                        if(usernameList.contains(username)){
+                            if(!username.contains(" ")){
+                                isValid = true
+                            }else{
+                                toastMessage("Username should not contain whitespace!")
+                                isValid = false
+                            }
+                        }else{
+                            toastMessage("Username Already Exist")
+                            isValid = false
+                        }
+                    }else{
+                        toastMessage("Password Confirmation not match with Password")
+                        isValid = false
+                    }
+                }else isValid = false
             }
-        }else{
-            toastMessage("Password Confirmation not match with Password")
-            false
-        }
+        return isValid
     }
 
     private fun addToDatabase(username: String, password: String, fullName: String) {
-        val user = User(
+        var user = User(
             id = 0,
             username = username,
             password = password,
             fullname = fullName
         )
         userVM.addUser(user)
+        user = userVM.getUser(username).value!!
+        addToSharedPref(username, password, fullName, user.id)
         toastMessage("Horay! Welcome to the club!")
     }
     private fun addToSharedPref(username: String, password: String, fullName: String, userId: Int) {

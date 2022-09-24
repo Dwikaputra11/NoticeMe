@@ -1,5 +1,7 @@
 package com.example.noticeme.ui
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +15,7 @@ import com.example.noticeme.databinding.FragmentBottomSheetAddNoteBinding
 import com.example.noticeme.dummy.QueryMenu
 import com.example.noticeme.model.Note
 import com.example.noticeme.model.NoteViewModel
+import com.example.noticeme.sharedpref.SharedPref
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BottomSheetNoteFragment(private var menu: QueryMenu,private var updateNote: Note?) : BottomSheetDialogFragment() {
@@ -20,6 +23,7 @@ class BottomSheetNoteFragment(private var menu: QueryMenu,private var updateNote
     private lateinit var binding: FragmentBottomSheetAddNoteBinding
     private lateinit var rbSelected: RadioButton
     private lateinit var noteVM: NoteViewModel
+    private lateinit var sharedPref: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +34,7 @@ class BottomSheetNoteFragment(private var menu: QueryMenu,private var updateNote
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        sharedPref = activity?.getSharedPreferences(SharedPref.name, Context.MODE_PRIVATE)!!
         noteVM = ViewModelProvider(this)[NoteViewModel::class.java]
         if(menu == QueryMenu.EDIT){
             binding.etInputTitle.setText(updateNote?.title)
@@ -50,7 +55,6 @@ class BottomSheetNoteFragment(private var menu: QueryMenu,private var updateNote
         Log.d("Bottom Sheet", "editNote: Started")
         val title = binding.etInputTitle.text.toString()
         val desc = binding.etInputDesc.text.toString()
-        // TODO: Error when radio button not choose
         val selectedId = binding.rgCategory.checkedRadioButtonId
         rbSelected = binding.root.findViewById(selectedId)
         val category = rbSelected.text.toString()
@@ -58,6 +62,7 @@ class BottomSheetNoteFragment(private var menu: QueryMenu,private var updateNote
         if(isValid(title, desc, category)){
             val note = Note(
                 id = updateNote!!.id,
+                user_id = updateNote!!.user_id,
                 title = title,
                 desc = desc,
                 category = category
@@ -88,10 +93,12 @@ class BottomSheetNoteFragment(private var menu: QueryMenu,private var updateNote
         val selectedId = binding.rgCategory.checkedRadioButtonId
         rbSelected = binding.root.findViewById(selectedId)
         val category = rbSelected.text.toString()
+        val userId = sharedPref.getInt(SharedPref.userId, -1)
 
         if(isValid(title, desc, category)){
             val note = Note(
                 id = 0,
+                user_id = userId,
                 title = title,
                 desc = desc,
                 category = category

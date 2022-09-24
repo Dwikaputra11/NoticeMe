@@ -12,14 +12,14 @@ interface UserDao {
     fun findUser(username:String): LiveData<User>
 
     @Query("SELECT username FROM user")
-    fun getAllUsername(): List<String>
+    suspend fun getAllUsername(): List<String>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addUser(user: User)
+    suspend fun addUser(user: User)
 
     @Update
-    fun updateUser(user: User)
+    suspend fun updateUser(user: User)
 
     @Delete
-    fun deleteUser(user: User)
+    suspend fun deleteUser(user: User)
 }

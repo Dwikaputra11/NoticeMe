@@ -46,8 +46,8 @@ abstract class NoteDatabase: RoomDatabase() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
                 databaseWriteExecutor.execute {
-                    val noteDao: NoteDao = INSTANCE!!.noteDao()
-                    noteDao.deleteAll()
+//                    val noteDao: NoteDao = INSTANCE!!.noteDao()
+//                    noteDao.deleteAll()
 
 //                // just add data for first time when database created
 //                var note = Note(0, "Eating", "Eating the food", "Health")
