@@ -5,10 +5,9 @@ import com.example.noticeme.db.NoteDatabase
 import com.example.noticeme.model.Note
 
 class NoteRepository(private val noteDao: NoteDao) {
-    private var allNotes: LiveData<List<Note>> = noteDao.getAllNote()
 
-    fun getAllNotes(): LiveData<List<Note>> {
-        return allNotes
+    fun getAllNotes(userId: Int): LiveData<List<Note>> {
+        return noteDao.getAllNote(userId)
     }
 
     fun insert(note: Note) {
@@ -27,8 +26,8 @@ class NoteRepository(private val noteDao: NoteDao) {
         NoteDatabase.databaseWriteExecutor.execute { noteDao.deleteNote(note) }
     }
 
-    fun deleteAllNotes(){
-        NoteDatabase.databaseWriteExecutor.execute{ noteDao.deleteAll() }
+    fun deleteAllNotes(userId: Int){
+        NoteDatabase.databaseWriteExecutor.execute{ noteDao.deleteAll(userId) }
     }
 
     fun searchDatabase(searchQuery: String): LiveData<List<Note>> {

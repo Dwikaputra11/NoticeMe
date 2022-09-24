@@ -6,9 +6,9 @@ import com.example.noticeme.model.User
 
 class UserRepository(private val userDao: UserDao) {
 
-    fun findUser(username:String): LiveData<User>{
-        return userDao.findUser(username)
-    }
+    fun findUser(username:String): LiveData<User> = userDao.findUser(username)
+
+    fun getAllUsername(): List<String> = userDao.getAllUsername()
 
     fun addUser(user: User){
         NoteDatabase.databaseWriteExecutor.execute { userDao.addUser(user) }

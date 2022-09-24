@@ -33,7 +33,7 @@ class SplashScreenFragment : Fragment() {
         val splashTime = 3000L
         sharedPref = activity?.getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE)!!
         Handler().postDelayed({
-            detectAccount()
+            isFirstInstall()
         },splashTime)
     }
 
@@ -47,15 +47,24 @@ class SplashScreenFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.show()
     }
 
-    private fun detectAccount(){
-        val username = sharedPref.getString(SharedPref.username, "")
-        if (username != null) {
-            if(username.isBlank()){
-                Navigation.findNavController(binding.root).navigate(R.id.action_splashScreenFragment_to_onBoardingFragment)
-            }else{
-                val bundle = Bundle()
-                bundle.putString(SharedPref.username, username)
-                Navigation.findNavController(binding.root).navigate(R.id.action_splashScreenFragment_to_homeFragment, bundle)
+    private fun isFirstInstall(){
+        // check if user first install app it will go to on boarding page for the introduction
+        val firstInstall = sharedPref.getBoolean(SharedPref.firstInstall,true)
+        if(firstInstall){
+            Navigation.findNavController(binding.root).navigate(R.id.action_splashScreenFragment_to_onBoardingFragment)
+        }else{
+            // if user is already login it will go to home, if not it will go to login page
+            val username = sharedPref.getString(SharedPref.username, "")
+            if(username != null){
+                // username blank that means the last user open the app the account has been already logout
+                if(username.isBlank()){
+                    Navigation.findNavController(binding.root).navigate(R.id.action_onBoardingFragment_to_loginFragment)
+                }else{
+                    // pass username that will display in home page use navigation arguments
+                    val bundle = Bundle()
+                    bundle.putString(SharedPref.username, username)
+                    Navigation.findNavController(binding.root).navigate(R.id.action_splashScreenFragment_to_homeFragment, bundle)
+                }
             }
         }
     }

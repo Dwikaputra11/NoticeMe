@@ -8,5 +8,7 @@ class SharedPref {
         const val username = "username"
         const val password = "password"
         const val fullName = "full_name"
+        const val firstInstall = "first_install"
+        const val userId = "user_id"
     }
 }

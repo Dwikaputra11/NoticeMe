@@ -6,8 +6,8 @@ import com.example.noticeme.model.Note
 
 @Dao
 interface NoteDao {
-    @Query("SELECT * FROM Note ORDER BY title ASC")
-    fun getAllNote():  LiveData<List<Note>>
+    @Query("SELECT * FROM Note WHERE user_id == :userId ORDER BY title ASC")
+    fun getAllNote(userId: Int):  LiveData<List<Note>>
 
     @Query("SELECT * FROM Note WHERE Note.id == :id")
     fun getNote(id: Int): LiveData<Note>
@@ -15,8 +15,8 @@ interface NoteDao {
     @Query("SELECT * FROM Note WHERE title LIKE :searchQuery")
     fun searchDatabase(searchQuery: String): LiveData<List<Note>>
 
-    @Query("DELETE FROM Note")
-    fun deleteAll()
+    @Query("DELETE FROM Note WHERE user_id == :userId")
+    fun deleteAll(userId: Int)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertNote(note: Note)

@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 
 class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val readAllData:LiveData<List<Note>>
     private val repository: NoteRepository
 
     init {
@@ -18,10 +17,11 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             application
         ).noteDao()
         repository = NoteRepository(noteDao)
-        readAllData = repository.getAllNotes()
     }
+    // get all notes collection base on userId that login
+    fun getAllNotes(userId: Int):LiveData<List<Note>> = repository.getAllNotes(userId)
 
-    fun getAllNotes():LiveData<List<Note>> = readAllData
+    fun getNote(id: Int): LiveData<Note> = repository.get(id)
 
     fun addNote(note: Note){
         viewModelScope.launch(Dispatchers.IO) {
@@ -41,9 +41,9 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun deleteAllNotes(){
+    fun deleteAllNotes(userId: Int){
         viewModelScope.launch(Dispatchers.IO){
-            repository.deleteAllNotes()
+            repository.deleteAllNotes(userId)
         }
     }
 

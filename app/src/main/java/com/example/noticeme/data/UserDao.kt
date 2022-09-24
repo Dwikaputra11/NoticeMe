@@ -8,7 +8,11 @@ import com.example.noticeme.model.User
 interface UserDao {
 
     @Query("SELECT * FROM user WHERE username == :username")
+    // live data for when we update the user profile the user information change immediately in UI
     fun findUser(username:String): LiveData<User>
+
+    @Query("SELECT username FROM user")
+    fun getAllUsername(): List<String>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addUser(user: User)

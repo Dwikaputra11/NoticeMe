@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 
 class UserViewModel(application: Application): AndroidViewModel(application) {
     private val repository: UserRepository
+    private lateinit var userAccount: LiveData<User>
 
     init {
         val userDao = NoteDatabase.getDatabase(
@@ -18,6 +19,13 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
         ).userDao()
         repository = UserRepository(userDao)
     }
+
+    fun getUser(username:String): LiveData<User>{
+        userAccount = findUser(username)
+        return userAccount
+    }
+
+    fun getAllUsername(): List<String> = repository.getAllUsername()
 
     fun addUser(user: User){
         viewModelScope.launch(Dispatchers.IO){ repository.addUser(user) }

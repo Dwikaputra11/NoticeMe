@@ -23,6 +23,7 @@ import com.example.noticeme.databinding.FragmentHomeBinding
 import com.example.noticeme.dummy.QueryMenu
 import com.example.noticeme.model.Note
 import com.example.noticeme.model.NoteViewModel
+import com.example.noticeme.model.UserViewModel
 import com.example.noticeme.sharedpref.SharedPref
 
 class HomeFragment : Fragment(), MenuProvider {
@@ -31,6 +32,7 @@ class HomeFragment : Fragment(), MenuProvider {
     private lateinit var sharedPref: SharedPreferences
     private lateinit var noteItemAdapter: NoteItemAdapter
     private lateinit var noteVM: NoteViewModel
+    private lateinit var userVM: UserViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +46,7 @@ class HomeFragment : Fragment(), MenuProvider {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         sharedPref = activity?.getSharedPreferences(SharedPref.name, Context.MODE_PRIVATE)!!
         noteVM = ViewModelProvider(this)[NoteViewModel::class.java]
+        userVM = ViewModelProvider(this)[UserViewModel::class.java]
         setView()
 
         binding.fabAddNote.setOnClickListener {
@@ -51,7 +54,6 @@ class HomeFragment : Fragment(), MenuProvider {
         }
 
         // setting toolbar menu item to clickable
-        // TODO: logout icon not showing alert dialog
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         setHasOptionsMenu(true)
@@ -64,11 +66,14 @@ class HomeFragment : Fragment(), MenuProvider {
 
     private fun setView(){
         val username = arguments?.getString(SharedPref.username)
-        binding.tvUsername.text = "$username,"
-        noteItemAdapter = NoteItemAdapter()
-        noteVM.getAllNotes().observe(viewLifecycleOwner, Observer { notes ->
-            noteItemAdapter.setNoteList(notes as List<Note>)
-        })
+        val userId = sharedPref.getInt(SharedPref.userId, -1)
+        if(userId != -1){ // check the userId that shared pref store is it null or not
+            binding.tvUsername.text = "$username,"
+            noteItemAdapter = NoteItemAdapter()
+            noteVM.getAllNotes(userId).observe(viewLifecycleOwner) { notes ->
+                noteItemAdapter.setNoteList(notes as List<Note>)
+            }
+        }else Toast.makeText(context, "Terjadi kesalahan dalam sistem", Toast.LENGTH_SHORT).show()
         noteItemAdapter.setOnItemClickListener(object : NoteItemAdapter.OnItemClickListener{
             override fun onItemClick(menu: QueryMenu, note: Note) {
                 when(menu){
@@ -146,6 +151,7 @@ class HomeFragment : Fragment(), MenuProvider {
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setPositiveButton("Yes") { _, _ ->
                     run {
+                        // when "YES" option was clicked shared pref will clear the all data that was store
                         val exit = sharedPref.edit()
                         exit.clear()
                         exit.apply()
@@ -161,18 +167,23 @@ class HomeFragment : Fragment(), MenuProvider {
             }
             R.id.deleteAll -> {
                 Log.d("Home Fragment", "onMenuItemSelected: DeleteAll")
-                if((noteVM.getAllNotes().value?.size ?: 0) != 0){
-                    val builder = AlertDialog.Builder(requireContext())
-                    builder.setPositiveButton("Yes") { _, _ ->
-                        noteVM.deleteAllNotes()
-                        Toast.makeText(context, "Delete all successfully!", Toast.LENGTH_SHORT).show()
+                val userId = sharedPref.getInt(SharedPref.userId, -1)
+                if(userId != -1){
+                    if((noteVM.getAllNotes(userId).value?.size ?: 0) != 0){
+                        val builder = AlertDialog.Builder(requireContext())
+                        builder.setPositiveButton("Yes") { _, _ ->
+                            noteVM.deleteAllNotes(userId)
+                            Toast.makeText(context, "Delete all successfully!", Toast.LENGTH_SHORT).show()
+                        }
+                        builder.setNegativeButton("No") { _, _ -> }
+                        builder.setTitle("Delete all notes?")
+                        builder.setMessage("Are you sure to delete all your notes?")
+                        builder.create().show()
+                    }else{
+                        Toast.makeText(context, "You don't have any note yet", Toast.LENGTH_SHORT).show()
                     }
-                    builder.setNegativeButton("No") { _, _ -> }
-                    builder.setTitle("Delete all notes?")
-                    builder.setMessage("Are you sure to delete all your notes?")
-                    builder.create().show()
-                }else{
-                    Toast.makeText(context, "You don't have any note yet", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Terjadi kesalahan dalam sistem", Toast.LENGTH_SHORT).show()
                 }
                 true
             }
@@ -183,9 +194,9 @@ class HomeFragment : Fragment(), MenuProvider {
     private fun searchInDatabase(query: String) {
         Log.d("Home Fragment", "searchInDatabase: $query")
         val searchQuery ="%$query%"
-        noteVM.searchDatabase(searchQuery).observe(viewLifecycleOwner, Observer {
+        noteVM.searchDatabase(searchQuery).observe(viewLifecycleOwner) {
             noteItemAdapter.setNoteList(it as List<Note>)
-        })
+        }
     }
 
 }
