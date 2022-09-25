@@ -42,7 +42,6 @@ class HomeFragment : Fragment(), MenuProvider {
         return binding.root
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         sharedPref = requireActivity().getSharedPreferences(SharedPref.name, Context.MODE_PRIVATE)
         noteVM = ViewModelProvider(this)[NoteViewModel::class.java]
@@ -192,9 +191,10 @@ class HomeFragment : Fragment(), MenuProvider {
     }
 
     private fun searchInDatabase(query: String) {
+        val userId = sharedPref.getInt(SharedPref.userId,-1)
         Log.d("Home Fragment", "searchInDatabase: $query")
         val searchQuery ="%$query%"
-        noteVM.searchDatabase(searchQuery).observe(viewLifecycleOwner) {
+        noteVM.searchDatabase(searchQuery, userId).observe(viewLifecycleOwner) {
             noteItemAdapter.setNoteList(it as List<Note>)
         }
     }

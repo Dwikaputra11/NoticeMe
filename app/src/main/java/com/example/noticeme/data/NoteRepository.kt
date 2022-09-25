@@ -30,7 +30,7 @@ class NoteRepository(private val noteDao: NoteDao) {
         NoteDatabase.databaseWriteExecutor.execute{ noteDao.deleteAll(userId) }
     }
 
-    fun searchDatabase(searchQuery: String): LiveData<List<Note>> {
-        return noteDao.searchDatabase(searchQuery)
+    fun searchDatabase(searchQuery: String, userId: Int): LiveData<List<Note>> {
+        return noteDao.searchDatabase(searchQuery, userId)
     }
 }

@@ -47,7 +47,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun searchDatabase(searchQuery: String): LiveData<List<Note>>{
-        return repository.searchDatabase(searchQuery)
+    fun searchDatabase(searchQuery: String, userId: Int): LiveData<List<Note>>{
+        return repository.searchDatabase(searchQuery,userId)
     }
 }

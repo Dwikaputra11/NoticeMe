@@ -12,8 +12,8 @@ interface NoteDao {
     @Query("SELECT * FROM Note WHERE Note.id == :id")
     fun getNote(id: Int): LiveData<Note>
 
-    @Query("SELECT * FROM Note WHERE title LIKE :searchQuery")
-    fun searchDatabase(searchQuery: String): LiveData<List<Note>>
+    @Query("SELECT * FROM Note WHERE title LIKE :searchQuery AND user_id == :userId")
+    fun searchDatabase(searchQuery: String,userId: Int): LiveData<List<Note>>
 
     @Query("DELETE FROM Note WHERE user_id == :userId")
     fun deleteAll(userId: Int)
