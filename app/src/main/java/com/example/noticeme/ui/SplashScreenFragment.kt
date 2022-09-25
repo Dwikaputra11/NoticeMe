@@ -31,7 +31,7 @@ class SplashScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val splashTime = 3000L
-        sharedPref = activity?.getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE)!!
+        sharedPref = requireActivity().getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE)
         Handler().postDelayed({
             isFirstInstall()
         },splashTime)

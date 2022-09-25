@@ -7,19 +7,19 @@ import com.example.noticeme.model.User
 @Dao
 interface UserDao {
 
-    @Query("SELECT * FROM user WHERE username == :username")
+    @Query("SELECT * FROM user WHERE username LIKE :username")
     // live data for when we update the user profile the user information change immediately in UI
     fun findUser(username:String): LiveData<User>
 
-    @Query("SELECT username FROM user")
-    suspend fun getAllUsername(): List<String>
+    @Query("SELECT COUNT() FROM user WHERE username == :username")
+    fun countExistUser(username: String): Int
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addUser(user: User)
+    @Insert
+    fun addUser(user: User)
 
     @Update
-    suspend fun updateUser(user: User)
+    fun updateUser(user: User)
 
     @Delete
-    suspend fun deleteUser(user: User)
+    fun deleteUser(user: User)
 }

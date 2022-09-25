@@ -9,49 +9,20 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class UserRepository(private val userDao: UserDao) {
-    private lateinit var usernameList: List<String>
-    private lateinit var user: LiveData<User>
 
-    @OptIn(DelicateCoroutinesApi::class)
-    fun findUser(username:String): LiveData<User>{
-        GlobalScope.launch(Dispatchers.IO){
-            user = userDao.findUser(username)
-        }
-        return user
+    fun findUser(username:String): LiveData<User> = userDao.findUser(username)
+
+    fun countUser(username: String): Int = userDao.countExistUser(username)
+
+    fun addUser(user: User){
+        NoteDatabase.databaseWriteExecutor.execute { userDao.addUser(user)}
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
-    suspend fun getAllUsername(): List<String>{
-        GlobalScope.launch(Dispatchers.IO){
-            usernameList = userDao.getAllUsername()
-        }
-        return usernameList
+    fun updateUser(user: User){
+        NoteDatabase.databaseWriteExecutor.execute { userDao.updateUser(user) }
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
-    suspend fun addUser(user: User){
-        NoteDatabase.databaseWriteExecutor.execute {
-            GlobalScope.launch(Dispatchers.IO) {
-                userDao.addUser(user)
-            }
-        }
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    suspend fun updateUser(user: User){
-        NoteDatabase.databaseWriteExecutor.execute {
-            GlobalScope.launch(Dispatchers.IO){
-                userDao.updateUser(user)
-            }
-        }
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    suspend fun  deleteUser(user: User){
-        NoteDatabase.databaseWriteExecutor.execute {
-            GlobalScope.launch(Dispatchers.IO){
-                userDao.deleteUser(user)
-            }
-        }
+    fun  deleteUser(user: User){
+        NoteDatabase.databaseWriteExecutor.execute { userDao.deleteUser(user) }
     }
 }

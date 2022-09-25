@@ -44,7 +44,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        sharedPref = activity?.getSharedPreferences(SharedPref.name, Context.MODE_PRIVATE)!!
+        sharedPref = requireActivity().getSharedPreferences(SharedPref.name, Context.MODE_PRIVATE)
         noteVM = ViewModelProvider(this)[NoteViewModel::class.java]
         userVM = ViewModelProvider(this)[UserViewModel::class.java]
         setView()
@@ -61,7 +61,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
     fun showBottomSheet(menu: QueryMenu, note: Note?){
         val addNoteBottomSheetFragment = BottomSheetNoteFragment(menu, note)
-        addNoteBottomSheetFragment.show(activity?.supportFragmentManager?.beginTransaction()!!, addNoteBottomSheetFragment.tag)
+        addNoteBottomSheetFragment.show(requireActivity().supportFragmentManager.beginTransaction(), addNoteBottomSheetFragment.tag)
     }
 
     private fun setView(){
