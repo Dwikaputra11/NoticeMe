@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
 import com.example.noticeme.adapter.OnBoardAdapter
 import com.example.noticeme.databinding.FragmentOnBoardingBinding
-import com.example.noticeme.dummy.DummyData
+import com.example.noticeme.helper.DummyData
 
 class OnBoardingFragment : Fragment() {
 

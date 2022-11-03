@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noticeme.databinding.NoteItemBinding
-import com.example.noticeme.dummy.QueryMenu
+import com.example.noticeme.helper.QueryMenu
 import com.example.noticeme.model.Note
 
 class NoteItemAdapter: RecyclerView.Adapter<NoteItemAdapter.ViewHolder>() {

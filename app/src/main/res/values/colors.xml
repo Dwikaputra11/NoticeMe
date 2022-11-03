@@ -12,4 +12,20 @@
     <color name="button_color">#FF00B2FF</color>
     <color name="unselected">#CFCFCF</color>
     <color name="selected">#737373</color>
+
+    <color name="colorSecondary">#2D2D2D</color>
+
+    <color name="colorGradientStart">#2D2D2D</color>
+    <color name="colorGradientCenter">#2D2D2D</color>
+    <color name="colorGradientEnd">#2D2D2D</color>
+
+    <color name="colorBackground">#EBEBEB</color>
+
+    <color name="text_color">#505050</color>
+
+    <color name="bone_color">#E6E6E6</color>
+    <color name="bone_color_alt">#C8C8C8</color>
+
+    <color name="bone_ray_color">#D7BEBEBE</color>
+    <color name="bone_ray_color_alt">#ffffff</color>
 </resources>

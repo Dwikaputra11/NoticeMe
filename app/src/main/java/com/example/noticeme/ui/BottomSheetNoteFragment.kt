@@ -12,7 +12,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.noticeme.R
 import com.example.noticeme.databinding.FragmentBottomSheetAddNoteBinding
-import com.example.noticeme.dummy.QueryMenu
+import com.example.noticeme.helper.QueryMenu
 import com.example.noticeme.model.Note
 import com.example.noticeme.model.NoteViewModel
 import com.example.noticeme.sharedpref.SharedPref

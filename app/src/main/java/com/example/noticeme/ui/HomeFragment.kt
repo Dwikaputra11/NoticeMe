@@ -1,6 +1,5 @@
 package com.example.noticeme.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -13,14 +12,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noticeme.R
 import com.example.noticeme.adapter.NoteItemAdapter
 import com.example.noticeme.databinding.FragmentHomeBinding
-import com.example.noticeme.dummy.QueryMenu
+import com.example.noticeme.helper.QueryMenu
 import com.example.noticeme.model.Note
 import com.example.noticeme.model.NoteViewModel
 import com.example.noticeme.model.UserViewModel
@@ -73,6 +71,7 @@ class HomeFragment : Fragment(), MenuProvider {
                 noteItemAdapter.setNoteList(notes as List<Note>)
             }
         }else Toast.makeText(context, "Terjadi kesalahan dalam sistem", Toast.LENGTH_SHORT).show()
+
         noteItemAdapter.setOnItemClickListener(object : NoteItemAdapter.OnItemClickListener{
             override fun onItemClick(menu: QueryMenu, note: Note) {
                 when(menu){

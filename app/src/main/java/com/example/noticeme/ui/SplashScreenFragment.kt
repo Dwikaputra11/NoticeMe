@@ -31,6 +31,7 @@ class SplashScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val splashTime = 3000L
+//        throw java.lang.RuntimeException("Test Crash") //  force crash to active crashlitycs
         sharedPref = requireActivity().getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE)
         Handler().postDelayed({
             isFirstInstall()

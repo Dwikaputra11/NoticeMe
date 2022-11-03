@@ -1,4 +1,4 @@
-package com.example.noticeme.dummy
+package com.example.noticeme.helper
 
 import com.example.noticeme.R
 import com.example.noticeme.model.OnBoarding

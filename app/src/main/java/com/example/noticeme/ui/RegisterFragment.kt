@@ -16,6 +16,7 @@ import com.example.noticeme.databinding.FragmentRegisterBinding
 import com.example.noticeme.model.User
 import com.example.noticeme.model.UserViewModel
 import com.example.noticeme.sharedpref.SharedPref
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.*
 import kotlinx.coroutines.runBlocking as runBlocking
 
@@ -24,6 +25,7 @@ class RegisterFragment : Fragment() {
     private lateinit var binding:FragmentRegisterBinding
     private lateinit var sharedPref: SharedPreferences
     private lateinit var userVM: UserViewModel
+    private lateinit var auth: FirebaseAuth
     private val TAG = "Register Fragment"
 
     override fun onCreateView(
@@ -38,6 +40,7 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         sharedPref = requireActivity().getSharedPreferences(SharedPref.name, Context.MODE_PRIVATE)!!
         userVM = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        auth = FirebaseAuth.getInstance()
         binding.btnRegister.setOnClickListener {
             GlobalScope.async { registerAccount() }
         }
@@ -54,7 +57,8 @@ class RegisterFragment : Fragment() {
         val confirmPassword = binding.etConfPasswordRegist.text.toString()
 
         if(isInputValid(username, password, confirmPassword)){
-            addToDatabase(username, password, fullName)
+//            addToDatabase(username, password, fullName)
+            addToFirebase(username, password)
             requireActivity().runOnUiThread {
                 toastMessage("Horay! Welcome to the club!")
                 Navigation.findNavController(binding.root).navigate(R.id.action_registerFragment_to_loginFragment)
@@ -99,6 +103,21 @@ class RegisterFragment : Fragment() {
         }.await()
         Log.d(TAG, "findUsername: outer $waitFor")
         return waitFor
+    }
+
+    private fun addToFirebase(email: String, password: String){
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                if(it.isSuccessful){
+                    Log.d(TAG, "addToFirebase: Success ${it.result.user}")
+                }else{
+                    Log.d(TAG, "addToFirebase: Unsuccessfully")
+                }
+            }
+            .addOnFailureListener {
+                Log.d(TAG, "addToFirebase Failed: ${it.localizedMessage}")
+            }
+
     }
 
     private fun addToDatabase(username: String, password: String, fullName: String) {

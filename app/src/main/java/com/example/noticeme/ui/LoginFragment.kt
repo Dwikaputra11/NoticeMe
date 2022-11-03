@@ -1,6 +1,7 @@
 package com.example.noticeme.ui
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,17 @@ import com.example.noticeme.databinding.FragmentLoginBinding
 import com.example.noticeme.model.User
 import com.example.noticeme.model.UserViewModel
 import com.example.noticeme.sharedpref.SharedPref
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthCredential
+import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.*
 
 class LoginFragment : Fragment() {
@@ -23,6 +35,9 @@ class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var sharedPref: SharedPreferences
     private lateinit var userVM: UserViewModel
+    private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
+    private val reqCode: Int = 123
     private var user: User? = null
 
     private val TAG = "Login Fragment"
@@ -38,13 +53,72 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         sharedPref = requireActivity().getSharedPreferences(SharedPref.name,Context.MODE_PRIVATE)
         userVM = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        auth = FirebaseAuth.getInstance()
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+
 
         binding.btnLogin.setOnClickListener {
-            GlobalScope.async { loginAccount() }
+//            GlobalScope.async { loginAccount() }
+            loginWithFirebase()
         }
 
         binding.tvRegister.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_loginFragment_to_registerFragment)
+        }
+    }
+
+
+
+    private fun loginWithFirebase(){
+        val username = binding.etUsernameLogin.text.toString().trim()
+        val password = binding.etPasswordLogin.text.toString().trim()
+
+        val signInIntent: Intent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, reqCode)
+
+//        auth.signInWithEmailAndPassword(username,password)
+//            .addOnCompleteListener(requireActivity()) {
+//                if(it.isSuccessful){
+//                    Log.d(TAG, "loginWithFirebase: Success: ${it.result.user}")
+//                }else{
+//                    Log.d(TAG, "loginWithFirebase: Failed")
+//                }
+//            }
+//            .addOnFailureListener {
+//                Log.d(TAG, "loginWithFirebase: ${it.message}")
+//            }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == reqCode){
+            val task : Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            resultResponse(task)
+        }
+    }
+
+    private fun resultResponse(task: Task<GoogleSignInAccount>){
+        try{
+            val account: GoogleSignInAccount? = task.getResult(ApiException::class.java)
+            if(account != null) updateUI(account)
+        }catch (e: ApiException){
+            Toast.makeText(requireContext(), e.toString(), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun updateUI(account: GoogleSignInAccount){
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        auth.signInWithCredential(credential).addOnCompleteListener {
+            if(it.isSuccessful){
+                val bundle = Bundle()
+                goToHome("dwika")
+//                Navigation.findNavController(binding.root).navigate(R.id.action_loginFragment_to_homeFragment, bundle)
+            }
         }
     }
 
@@ -115,6 +189,9 @@ class LoginFragment : Fragment() {
     private fun goToHome(username: String) {
         val bundle = Bundle()
         bundle.putString(SharedPref.username, username)
+        val addData = sharedPref.edit()
+        addData.putInt(SharedPref.userId, 1)
+        addData.apply()
         toastMessage("Login Successfully")
         Navigation.findNavController(binding.root).navigate(R.id.action_loginFragment_to_homeFragment, bundle)
     }
