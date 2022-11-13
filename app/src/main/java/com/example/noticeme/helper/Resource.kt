@@ -3,6 +3,7 @@ package com.example.noticeme.helper
 import androidx.lifecycle.LiveData
 import com.example.noticeme.model.Note
 
+@Suppress("unused", "unused", "unused", "unused")
 sealed class Resource<out T>(
     open val data: LiveData<List<Note>>?,
     open val loading: Boolean

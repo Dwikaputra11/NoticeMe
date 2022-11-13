@@ -1,13 +1,15 @@
 package com.example.noticeme.model
 
 import android.app.Application
-import androidx.lifecycle.*
-import com.example.noticeme.data.NoteDao
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.example.noticeme.data.NoteRepository
 import com.example.noticeme.db.NoteDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@Suppress("unused", "unused", "unused", "unused", "unused", "unused")
 class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: NoteRepository

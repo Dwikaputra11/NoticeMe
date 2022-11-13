@@ -16,9 +16,7 @@ class OnBoardAdapter(private var onBoardList: ArrayList<OnBoarding>): RecyclerVi
     private lateinit var sharedPref: SharedPreferences
     private lateinit var context: Context
 
-    class ViewHolder(var binding: OnBoardingItemBinding): RecyclerView.ViewHolder(binding.root) {
-
-    }
+    class ViewHolder(var binding: OnBoardingItemBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = OnBoardingItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)

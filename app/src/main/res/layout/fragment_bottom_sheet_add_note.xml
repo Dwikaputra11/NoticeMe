@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:hint="Title"
         android:textColor="@color/black"
-        />
+        android:inputType="text"
+        android:importantForAutofill="no" />
     <EditText
         android:id="@+id/etInputDesc"
         android:layout_width="match_parent"
@@ -22,7 +23,8 @@
         android:hint="Description"
         android:layout_marginTop="10dp"
         android:textColor="@color/black"
-        />
+        android:inputType="text"
+        android:importantForAutofill="no" />
 
     <RadioGroup
         android:id="@+id/rgCategory"

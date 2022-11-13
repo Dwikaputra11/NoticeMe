@@ -1,5 +1,10 @@
+@file:Suppress("unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused",
+    "unused", "unused"
+)
+
 package com.example.noticeme.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -24,6 +29,7 @@ import com.example.noticeme.model.NoteViewModel
 import com.example.noticeme.model.UserViewModel
 import com.example.noticeme.sharedpref.SharedPref
 
+@Suppress("unused", "unused")
 class HomeFragment : Fragment(), MenuProvider {
 
     private lateinit var binding: FragmentHomeBinding
@@ -61,6 +67,7 @@ class HomeFragment : Fragment(), MenuProvider {
         addNoteBottomSheetFragment.show(requireActivity().supportFragmentManager.beginTransaction(), addNoteBottomSheetFragment.tag)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setView(){
         val username = arguments?.getString(SharedPref.username)
         val userId = sharedPref.getInt(SharedPref.userId, -1)

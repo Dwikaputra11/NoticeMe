@@ -1,14 +1,16 @@
+@file:Suppress("DeferredResultUnused")
+
 package com.example.noticeme.ui
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.noticeme.R
@@ -18,15 +20,15 @@ import com.example.noticeme.model.UserViewModel
 import com.example.noticeme.sharedpref.SharedPref
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.*
-import kotlinx.coroutines.runBlocking as runBlocking
 
+private const val TAG = "Register Fragment"
+@Suppress("unused", "unused", "unused", "unused", "unused")
 class RegisterFragment : Fragment() {
 
     private lateinit var binding:FragmentRegisterBinding
     private lateinit var sharedPref: SharedPreferences
     private lateinit var userVM: UserViewModel
     private lateinit var auth: FirebaseAuth
-    private val TAG = "Register Fragment"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,7 +78,10 @@ class RegisterFragment : Fragment() {
     ): Boolean {
         return if (password == confirmPassword){
             if(!username.contains(" ")){
-                val isExist = GlobalScope.async { findUsername(username) }.await()
+                val isExist =
+                    withContext(Dispatchers.Default) {
+                        findUsername(username)
+                    }
                 Log.d(TAG, "isInputValid: $isExist")
                 if(!isExist){
                     Log.d(TAG, "isInputValid: Success")
@@ -97,10 +102,11 @@ class RegisterFragment : Fragment() {
 
     private suspend fun findUsername(username:String) : Boolean {
         Log.d(TAG, "findUsername: Started")
-        val waitFor =  CoroutineScope(Dispatchers.IO).async {
-            val isExist = userVM.countUser(username) > 0
-            isExist
-        }.await()
+        val waitFor =
+            withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                val isExist = userVM.countUser(username) > 0
+                isExist
+            }
         Log.d(TAG, "findUsername: outer $waitFor")
         return waitFor
     }

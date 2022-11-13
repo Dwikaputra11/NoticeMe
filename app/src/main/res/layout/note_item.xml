@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -45,7 +46,8 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:fontFamily="@font/roboto" />
+                android:fontFamily="@font/roboto"
+                tools:ignore="RelativeOverlap" />
 
             <TextView
                 android:paddingVertical="10dp"

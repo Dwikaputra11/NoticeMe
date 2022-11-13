@@ -1,3 +1,5 @@
+@file:Suppress("unused", "unused", "unused")
+
 package com.example.noticeme.ui
 
 import android.content.Context
@@ -22,14 +24,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
+private const val TAG = "Login Fragment"
+@Suppress("unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused")
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
@@ -40,7 +43,6 @@ class LoginFragment : Fragment() {
     private val reqCode: Int = 123
     private var user: User? = null
 
-    private val TAG = "Login Fragment"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -157,11 +159,12 @@ class LoginFragment : Fragment() {
     }
 
     private suspend fun findInDatabase(username: String): Boolean {
-        val status = CoroutineScope(Dispatchers.IO).async{
-            val isExist = userVM.countUser(username) > 0
-            Log.d(TAG, "findInDatabase: $isExist")
-            isExist
-        }.await()
+        val status =
+            withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                val isExist = userVM.countUser(username) > 0
+                Log.d(TAG, "findInDatabase: $isExist")
+                isExist
+            }
         Log.d(TAG, "findInDatabase: status $status")
         return status
     }

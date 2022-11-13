@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="IconLocation">
+        <ignore path="C:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/drawable/logo.png" />
+        <ignore path="C:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/drawable/logo.png" />
+        <ignore path="C:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/drawable/logo.png" />
+        <ignore path="C:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/drawable/logo.png" />
+        <ignore path="C:/dev/AndroidStudioProjects/Binar Academy/Dengan Git Config/NoticeMe/app/src/main/res/drawable/logo.png" />
+    </issue>
+</lint>

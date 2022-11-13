@@ -1,3 +1,5 @@
+@file:Suppress("unused", "unused")
+
 package com.example.noticeme.ui
 
 import android.content.Context
@@ -18,7 +20,13 @@ import com.example.noticeme.model.NoteViewModel
 import com.example.noticeme.sharedpref.SharedPref
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class BottomSheetNoteFragment(private var menu: QueryMenu,private var updateNote: Note?) : BottomSheetDialogFragment() {
+@Suppress("unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused",
+    "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused",
+    "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused",
+    "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused",
+    "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused"
+)
+class BottomSheetNoteFragment(private var menu: QueryMenu, private var updateNote: Note?) : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentBottomSheetAddNoteBinding
     private lateinit var rbSelected: RadioButton

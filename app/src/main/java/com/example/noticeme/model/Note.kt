@@ -1,9 +1,14 @@
+@file:Suppress("unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused",
+    "unused"
+)
+
 package com.example.noticeme.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+@Suppress("unused", "unused", "unused", "unused", "unused", "unused")
 @Entity
 data class Note(
     @PrimaryKey(autoGenerate = true)

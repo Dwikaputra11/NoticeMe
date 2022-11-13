@@ -3,10 +3,6 @@ package com.example.noticeme.data
 import androidx.lifecycle.LiveData
 import com.example.noticeme.db.NoteDatabase
 import com.example.noticeme.model.User
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class UserRepository(private val userDao: UserDao) {
 

@@ -15,15 +15,19 @@ interface NoteDao {
     @Query("SELECT * FROM Note WHERE title LIKE :searchQuery AND user_id == :userId")
     fun searchDatabase(searchQuery: String,userId: Int): LiveData<List<Note>>
 
+    @Suppress("unused")
     @Query("DELETE FROM Note WHERE user_id == :userId")
     fun deleteAll(userId: Int)
 
+    @Suppress("unused")
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertNote(note: Note)
 
+    @Suppress("unused")
     @Update
     fun updateNote(note: Note)
 
+    @Suppress("unused")
     @Delete
     fun deleteNote(note: Note): Int
 }

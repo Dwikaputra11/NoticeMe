@@ -63,7 +63,8 @@
                 android:text="Notice Me"
                 android:textColor="#8CCFFF"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
